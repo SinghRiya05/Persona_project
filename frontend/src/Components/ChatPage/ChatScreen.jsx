@@ -5,7 +5,7 @@ const ChatScreen = () => {
   const [chat,setChat]=useState([]);
   const[typing,setTyping]=useState(false);
   const chatBoxRef=useRef(null);
-
+const API_URL = "https://persona-project-wg2r.onrender.com";
   const handleSend = async() => {
     if (!message.trim()) return;
     const updatedChat=[...chat,{role:"user",content:message}];
@@ -13,7 +13,7 @@ const ChatScreen = () => {
     setMessage("")
    try {
     setTyping(true);
-     const res=await axios.post("http://localhost:8080/chat",{message:updatedChat})
+     const res=await axios.post(`${API_URL}/chat`,{message:updatedChat})
      setTyping(false)
     setChat(prev=>[...prev,{role:"assistant",content:res.data.reply}])
      
