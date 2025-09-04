@@ -66,7 +66,7 @@ app.post("/api/reset-chat", (req, res) => {
 });
 
 const __dirname = path.resolve();
-const frontendPath = path.join(__dirname, "build"); 
+const frontendPath = path.join(__dirname, "../frontend/build"); 
 
 app.use(express.static(frontendPath));
 
