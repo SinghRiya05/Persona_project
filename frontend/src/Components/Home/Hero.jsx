@@ -6,6 +6,8 @@ function Hero() {
   return (
     <section className='bg-gradient-to-r from-amber-200 to-gray-600'>
       <div className="flex flex-col items-center justify-center text-center max-w-5xl px-5 md:mx-10 lg:mx-auto py-5 space-y-6">
+
+        <button>riya</button>
         
         {/* Heading */}
         <div className='flex justify-center items-center gap-3'>
