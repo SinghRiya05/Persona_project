@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-export default function reset() {
+export default function Reset() {
 const API_URL = "https://persona-project-wg2r.onrender.com";
     const handleReset=async()=>{
    try {
