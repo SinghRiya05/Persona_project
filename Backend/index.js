@@ -1,86 +1,79 @@
-import express from "express"
-import { config } from "dotenv"
-config()
-import cors from "cors"
+import express from "express";
+import { config } from "dotenv";
+import cors from "cors";
 import OpenAI from "openai";
+import path from "path";
 
-const app=express();
+config();
+
+const app = express();
 app.use(cors());
 app.use(express.json());
-const port=process.env.PORT
 
-
+const port = process.env.PORT || 3000;
 
 const openai = new OpenAI({
-    apiKey: process.env.API_KEY,
-    baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
+  apiKey: process.env.API_KEY,
+  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
 });
 
-let chatHistory = []; // top of your file, app start hone se pehle
+let chatHistory = []; 
 
+app.post("/api/chat", async (req, res) => {
+  try {
+    const { message } = req.body;
 
-app.post("/chat",async(req,res)=>{
- try {
-       const {message}=req.body;
-       chatHistory.push({ role: "user", content: message });
-       const response= await openai.chat.completions.create({
-           model:"gemini-1.5-flash",
-           messages:[
-               {role:"system",content:`
-                Tum Hitesh Choudhary ho — ek developer, teacher aur YouTuber jo tech 
-      ko simple, friendly aur thoda humorous way me samjhate ho.
-      Tum Hindi + English mix (Hinglish) me reply dete ho.
-      Tumhare answers students ko motivate karne wale hote hain.
-      Tumhare explanations me real-life examples aur “chai” ka funny touch hota hai.
-      Tumhare YouTube channel ka name “Chai and Code” hai.
+    // save user message
+    chatHistory.push({ role: "user", content: message });
 
-      Rules for replies:
-      - Jab user short question pooche, short answer do.
-      - Jab user detailed explanation maange, simple aur step-by-step samjhao.
-      - Hamesha friendly aur motivating tone maintain karo.
-      
-      Example:
-      user: hii sir
-      hitesh: Hann ji! Kaise ho aap?
+    const response = await openai.chat.completions.create({
+      model: "gemini-1.5-flash",
+      messages: [
+        {
+          role: "system",
+          content: `
+            Tum Hitesh Choudhary ho — ek developer, teacher aur YouTuber jo tech
+            ko simple, friendly aur thoda humorous way me samjhate ho.
+            Tum Hindi + English mix (Hinglish) me reply dete ho.
+            Tumhare answers students ko motivate karne wale hote hain.
+            Tumhare explanations me real-life examples aur “chai” ka funny touch hota hai.
+            Tumhare YouTube channel ka name “Chai and Code” hai.
 
-      user: JavaScript me closure kya hai?
-      hitesh: Chalo simple se samjhate hain… (step-by-step explanation with real-life example)
-    
-    `},
-               ...message
-   
-           ],
-       });
-        const assistantMessage = response.choices[0].message.content;
+            Rules for replies:
+            - Jab user short question pooche, short answer do.
+            - Jab user detailed explanation maange, simple aur step-by-step samjhao.
+            - Hamesha friendly aur motivating tone maintain karo.
+          `
+        },
+        ...chatHistory 
+      ]
+    });
+
+    const assistantMessage = response.choices[0].message.content;
+
     chatHistory.push({ role: "assistant", content: assistantMessage });
-    console.log(chatHistory);
-    
 
-       res.json({
-           reply:assistantMessage,
-           
-       })
- } catch (error) {
-    console.log(error);
-    res.status(500).json({error:"Something went wrong"})
-    
- }
-})
+    res.json({ reply: assistantMessage });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
 
-console.log(chatHistory);
-
-
-app.post("/reset-chat", (req, res) => {
-  chatHistory = []; // Purana chat history clear
-  console.log("Reset");
-  console.log(chatHistory);
-  
-  
+app.post("/api/reset-chat", (req, res) => {
+  chatHistory = [];
   res.json({ message: "Chat history reset successfully." });
 });
 
+const __dirname = path.resolve();
+const frontendPath = path.join(__dirname, "build"); 
 
-app.listen(port,()=>{
-    console.log(`app is listening at port ${port}`);
-    
-})
+app.use(express.static(frontendPath));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
