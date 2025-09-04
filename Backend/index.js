@@ -66,6 +66,10 @@ app.post("/chat",async(req,res)=>{
 
 app.post("/reset-chat", (req, res) => {
   chatHistory = []; // Purana chat history clear
+  console.log("Reset");
+  console.log(chatHistory);
+  
+  
   res.json({ message: "Chat history reset successfully." });
 });
 
