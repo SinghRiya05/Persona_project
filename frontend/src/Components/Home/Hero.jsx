@@ -7,14 +7,14 @@ function Hero() {
     <section className='bg-gradient-to-r from-amber-200 to-gray-600'>
       <div className="flex flex-col items-center justify-center text-center max-w-5xl px-5 md:mx-10 lg:mx-auto py-5 space-y-6">
 
-        <button>riya</button>
+        
         
         {/* Heading */}
         <div className='flex justify-center items-center gap-3'>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 drop-shadow-sm">
             Hey, I am Hitesh Choudhary
           </h1>
-          <Coffee className='h-8 w-8 text-amber-700 drop-shadow-md' />
+          <button onClick={()=>nav}><Coffee className='h-8 w-8 text-amber-700 drop-shadow-md' /></button>
         </div>
 
         {/* Subheading with icons */}

@@ -6,6 +6,18 @@ const ChatScreen = () => {
   const[typing,setTyping]=useState(false);
   const chatBoxRef=useRef(null);
 const API_URL = "https://persona-project-wg2r.onrender.com";
+
+ const handleReset=async()=>{
+   try {
+     const res=await axios.post(`${API_URL}/reset-chat`)
+     console.log(res);
+     
+   } catch (error) {
+    console.log(error);
+    
+   }
+    }
+
   const handleSend = async() => {
     if (!message.trim()) return;
     const updatedChat=[...chat,{role:"user",content:message}];
@@ -67,6 +79,12 @@ const API_URL = "https://persona-project-wg2r.onrender.com";
           className="px-4 py-2 bg-amber-800 text-white rounded-lg hover:bg-amber-700 duration-200"
         >
           Send
+        </button>
+        <button
+          onClick={handleReset}
+          className="px-4 ml-5 py-2 bg-amber-800 text-white rounded-lg hover:bg-amber-700 duration-200"
+        >
+          Reset
         </button>
       </div>
 
