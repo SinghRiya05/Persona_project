@@ -70,7 +70,7 @@ const frontendPath = path.join(__dirname, "build");
 
 app.use(express.static(frontendPath));
 
-app.get("*", (req, res) => {
+app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
 
