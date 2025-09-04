@@ -53,9 +53,12 @@ app.post("/chat",async(req,res)=>{
        });
         const assistantMessage = response.choices[0].message.content;
     chatHistory.push({ role: "assistant", content: assistantMessage });
+    console.log(chatHistory);
+    
 
        res.json({
-           reply:assistantMessage
+           reply:assistantMessage,
+           
        })
  } catch (error) {
     console.log(error);
@@ -63,6 +66,9 @@ app.post("/chat",async(req,res)=>{
     
  }
 })
+
+console.log(chatHistory);
+
 
 app.post("/reset-chat", (req, res) => {
   chatHistory = []; // Purana chat history clear
