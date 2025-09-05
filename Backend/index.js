@@ -62,7 +62,7 @@ app.post("/api/chat", async (req, res) => {
 
     res.json({ reply: assistantMessage });
   } catch (error) {
-    console.error(error);
+    console.error("Chat API Error:", error.response?.data || error.message);
     res.status(500).json({ error: "Something went wrong" });
   }
 });
