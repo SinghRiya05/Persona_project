@@ -7,7 +7,9 @@ import path from "path";
 config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: process.env.FRONTEND_URL || "*" 
+}));
 app.use(express.json());
 
 const port = process.env.PORT || 3000;
@@ -65,14 +67,14 @@ app.post("/api/reset-chat", (req, res) => {
   res.json({ message: "Chat history reset successfully." });
 });
 
-const __dirname = path.resolve();
-const frontendPath = path.join(__dirname, "../frontend/build"); 
+// const __dirname = path.resolve();
+// const frontendPath = path.join(__dirname, "../frontend/build"); 
 
-app.use(express.static(frontendPath));
+// app.use(express.static(frontendPath));
 
-app.use((req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
-});
+// app.use((req, res) => {
+//   res.sendFile(path.join(frontendPath, "index.html"));
+// });
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
