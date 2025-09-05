@@ -3,31 +3,38 @@ import { config } from "dotenv";
 import cors from "cors";
 import OpenAI from "openai";
 
-
 config();
 
 const app = express();
-const FRONTEND = process.env.FRONTEND_URL || "https://persona-project-neon.vercel.app";
-app.use(cors({
-  origin: FRONTEND,
-  methods: ["GET", "POST", "OPTIONS"],
-  credentials: true
-}));
+
+
+const FRONTEND =
+  process.env.FRONTEND_URL || "https://persona-project-neon.vercel.app";
+  
+app.use(
+  cors({
+    origin: FRONTEND,
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true,
+  })
+);
+
+
 app.use(express.json());
 
 const port = process.env.PORT || 3000;
 
 const openai = new OpenAI({
   apiKey: process.env.API_KEY,
-  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
+  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
 });
 
-let chatHistory = []; 
+
+let chatHistory = [];
+
 
 app.post("/api/chat", async (req, res) => {
   try {
-  
-    
     const { message } = req.body;
 
     // save user message
@@ -50,10 +57,10 @@ app.post("/api/chat", async (req, res) => {
             - Jab user short question pooche, short answer do.
             - Jab user detailed explanation maange, simple aur step-by-step samjhao.
             - Hamesha friendly aur motivating tone maintain karo.
-          `
+          `,
         },
-        ...chatHistory 
-      ]
+        ...chatHistory,
+      ],
     });
 
     const assistantMessage = response.choices[0].message.content;
@@ -67,19 +74,14 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
+
+
 app.post("/api/reset-chat", (req, res) => {
   chatHistory = [];
   res.json({ message: "Chat history reset successfully." });
 });
 
-// const __dirname = path.resolve();
-// const frontendPath = path.join(__dirname, "../frontend/build"); 
 
-// app.use(express.static(frontendPath));
-
-// app.use((req, res) => {
-//   res.sendFile(path.join(frontendPath, "index.html"));
-// });
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
