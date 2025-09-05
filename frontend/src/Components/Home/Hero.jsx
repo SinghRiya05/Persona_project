@@ -14,7 +14,7 @@ function Hero() {
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 drop-shadow-sm">
             Hey, I am Hitesh Choudhary
           </h1>
-          <button onClick={()=>nav}><Coffee className='h-8 w-8 text-amber-700 drop-shadow-md' /></button>
+          <button ><Coffee className='h-8 w-8 text-amber-700 drop-shadow-md' /></button>
         </div>
 
         {/* Subheading with icons */}

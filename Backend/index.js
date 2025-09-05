@@ -2,13 +2,16 @@ import express from "express";
 import { config } from "dotenv";
 import cors from "cors";
 import OpenAI from "openai";
-import path from "path";
+
 
 config();
 
 const app = express();
+const FRONTEND = process.env.FRONTEND_URL || "https://persona-project-neon.vercel.app";
 app.use(cors({
-    origin: process.env.FRONTEND_URL || "*" 
+  origin: FRONTEND,
+  methods: ["GET", "POST", "OPTIONS"],
+  credentials: true
 }));
 app.use(express.json());
 
@@ -23,6 +26,8 @@ let chatHistory = [];
 
 app.post("/api/chat", async (req, res) => {
   try {
+  
+    
     const { message } = req.body;
 
     // save user message
