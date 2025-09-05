@@ -3,17 +3,22 @@ import axios from "axios";
 
 const ChatScreen = () => {
   const [message, setMessage] = useState("");
-  const [chat, setChat] = useState([]);
+  const [chat, setChat] = useState(() => {
+    // ✅ Refresh hone par localStorage se load karo
+    const savedChat = localStorage.getItem("chatHistory");
+    return savedChat ? JSON.parse(savedChat) : [];
+  });
   const [typing, setTyping] = useState(false);
   const chatBoxRef = useRef(null);
 
-  const API_URL = "https://persona-project-wg2r.onrender.com"; // backend URL (Render/Heroku)
+  const API_URL = "https://persona-project-wg2r.onrender.com"; // backend URL
 
   const handleReset = async () => {
     try {
       const res = await axios.post(`${API_URL}/api/reset-chat`);
       console.log(res.data);
-      setChat([]); // reset local chat bhi
+      setChat([]);
+      localStorage.removeItem("chatHistory"); // ✅ localStorage bhi clear
     } catch (error) {
       console.log(error);
     }
@@ -28,19 +33,27 @@ const ChatScreen = () => {
 
     try {
       setTyping(true);
-      const res = await axios.post(`${API_URL}/api/chat`, { message }); // ✅ string bhejna
+      const res = await axios.post(`${API_URL}/api/chat`, { message });
       setTyping(false);
 
-      setChat((prev) => [
-        ...prev,
-        { role: "assistant", content: res.data.reply }
-      ]);
+      const finalChat = [
+        ...updatedChat,
+        { role: "assistant", content: res.data.reply },
+      ];
+      setChat(finalChat);
+      localStorage.setItem("chatHistory", JSON.stringify(finalChat)); // ✅ Save in localStorage
     } catch (error) {
       console.log(error);
       setTyping(false);
     }
   };
 
+  // ✅ Whenever chat update ho, localStorage update karo
+  useEffect(() => {
+    localStorage.setItem("chatHistory", JSON.stringify(chat));
+  }, [chat]);
+
+  // ✅ Scroll always bottom
   useEffect(() => {
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
@@ -59,15 +72,12 @@ const ChatScreen = () => {
                 msg.role === "user"
                   ? "bg-amber-800 self-end ml-auto lg:max-w-[50%] max-w-[75%] rounded-tr-none"
                   : "bg-gray-700 self-start lg:max-w-[50%] max-w-[75%] rounded-tl-none"
-              } 
-              transition-all duration-200`}
+              } transition-all duration-200`}
           >
             {msg.content}
           </div>
         ))}
-        {typing && (
-          <div className="text-gray-500 italic mb-2">Typing...</div>
-        )}
+        {typing && <div className="text-gray-500 italic mb-2">Typing...</div>}
       </div>
 
       {/* Input Box */}
