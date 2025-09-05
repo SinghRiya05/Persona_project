@@ -9,7 +9,7 @@ const API_URL = "https://persona-project-wg2r.onrender.com";
 
  const handleReset=async()=>{
    try {
-     const res=await axios.post(`${API_URL}/reset-chat`)
+     const res=await axios.post(`${API_URL}/api/reset-chat`)
      console.log(res);
      
    } catch (error) {
@@ -25,7 +25,7 @@ const API_URL = "https://persona-project-wg2r.onrender.com";
     setMessage("")
    try {
     setTyping(true);
-     const res=await axios.post(`${API_URL}/chat`,{message:updatedChat})
+     const res=await axios.post(`${API_URL}/api/chat`,{message:updatedChat})
      setTyping(false)
     setChat(prev=>[...prev,{role:"assistant",content:res.data.reply}])
      
