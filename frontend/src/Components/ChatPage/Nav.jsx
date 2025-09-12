@@ -1,6 +1,6 @@
 import React from 'react';
 import image from "../../assets/image.jpg";
-import { Video, Phone,ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import {useNavigate} from "react-router-dom"
 
 function Nav() {
@@ -16,17 +16,15 @@ function Nav() {
           src={image}
           alt="profile"
         />
-        <div className="font-semibold text-lg">Hitesh Choudhary</div>
+        <div className="font-semibold text-sm md:text-lg">Hitesh Choudhary</div>
       </div>
 
       {/* Right: Icons */}
       <div className="flex items-center gap-4">
-        <button className="p-3 bg-white/10 rounded-full hover:bg-white/20 hover:scale-110 transition-all duration-200 shadow-sm">
-          <Video className="w-5 h-5 text-white" />
+        <button className="p-3 bg-white/10 rounded-full hover:bg-white/20 hover:scale-110 transition-all duration-200 shadow-sm text-sm md:text-lg">
+          AI Assistant
         </button>
-        <button className="p-3 bg-white/10 rounded-full hover:bg-white/20 hover:scale-110 transition-all duration-200 shadow-sm">
-          <Phone className="w-5 h-5 text-white" />
-        </button>
+       
       </div>
 
     </div>

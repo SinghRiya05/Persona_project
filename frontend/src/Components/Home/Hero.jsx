@@ -4,14 +4,14 @@ import { Coffee, Laptop, BookOpen, Users } from 'lucide-react'
 
 function Hero() {
   return (
-    <section className='bg-gradient-to-r from-amber-200 to-gray-600'>
+    <section className='bg-gradient-to-r from-amber-200 to-gray-600 min-h-screen'>
       <div className="flex flex-col items-center justify-center text-center max-w-5xl px-5 md:mx-10 lg:mx-auto py-5 space-y-6">
 
         
         
         {/* Heading */}
         <div className='flex justify-center items-center gap-3'>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 drop-shadow-sm">
+          <h1 className="text-2xl mt-4 sm:text-3xl md:text-4xl font-bold text-gray-900 drop-shadow-sm">
             Hey, I am Hitesh Choudhary
           </h1>
           <button ><Coffee className='h-8 w-8 text-amber-700 drop-shadow-md' /></button>
@@ -19,7 +19,7 @@ function Hero() {
 
         {/* Subheading with icons */}
         <div className="flex flex-wrap justify-center gap-5 text-gray-900 font-medium">
-          <div className="flex items-center gap-2">
+          <div className="flex text-sm sm:text-lg items-center gap-2">
             <Laptop className="h-5 w-5 text-teal-700" />
             <span>Web Development</span>
           </div>
@@ -34,9 +34,9 @@ function Hero() {
         </div>
 
         {/* Description */}
-        <p className="text-gray-100 leading-relaxed px-5 md:px-20 bg-black/20 rounded-xl p-3">
+        <p className="text-gray-100 leading-relaxed px-5 md:px-20 bg-black/20 rounded-xl p-2 text-sm sm:text-lg">
           Indian tech educator with 15+ years of experience, passionate about JavaScript, React, and Next.js.
-          Creator of LearnCodeOnline and Chaicode, teaching millions with practical, hands-on lessons in Hindi and English.
+          Creator of LearnCodeOnline and Chaicode, teaching millions.
         </p>
 
         {/* Persona Card */}

@@ -9,12 +9,11 @@ const app = express();
 
 
 const FRONTEND =
-  process.env.FRONTEND_URL || "https://persona-project-neon.vercel.app";
+  process.env.FRONTEND_URL ||`http://localhost:5173/`;
   
 app.use(
   cors({
-    origin: FRONTEND,
-    methods: ["GET", "POST", "OPTIONS"],
+    origin:`*`,
     credentials: true,
   })
 );
@@ -41,7 +40,7 @@ app.post("/api/chat", async (req, res) => {
     chatHistory.push({ role: "user", content: message });
 
     const response = await openai.chat.completions.create({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.0-flash",
       messages: [
         {
           role: "system",
@@ -57,6 +56,8 @@ app.post("/api/chat", async (req, res) => {
             - Jab user short question pooche, short answer do.
             - Jab user detailed explanation maange, simple aur step-by-step samjhao.
             - Hamesha friendly aur motivating tone maintain karo.
+            -Also use extra step by step explanation
+            -And use headings and subheadings
           `,
         },
         ...chatHistory,

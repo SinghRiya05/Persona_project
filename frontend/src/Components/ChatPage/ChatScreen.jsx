@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from 'remark-gfm';
+import { ArrowUp, Delete } from "lucide-react";
 
 const ChatScreen = () => {
   const [message, setMessage] = useState("");
@@ -11,7 +14,7 @@ const ChatScreen = () => {
   const [typing, setTyping] = useState(false);
   const chatBoxRef = useRef(null);
 
-  const API_URL = "https://persona-project-wg2r.onrender.com"; // backend URL
+  const API_URL =import.meta.VITE_API_URL || 'http://localhost:8080';
 
   const handleReset = async () => {
     try {
@@ -60,8 +63,10 @@ const ChatScreen = () => {
     }
   }, [chat]);
 
+
+
   return (
-    <div className="flex flex-col h-[90vh] bg-gray-100">
+    <div className="flex flex-col sm:h-[90vh] h-[85vh] bg-gray-100">
       {/* Messages Area */}
       <div ref={chatBoxRef} className="flex-1 p-4 overflow-y-auto">
         {chat.map((msg, i) => (
@@ -70,11 +75,14 @@ const ChatScreen = () => {
             className={`p-3 mb-3 rounded-xl text-white break-words 
               ${
                 msg.role === "user"
-                  ? "bg-amber-800 self-end ml-auto lg:max-w-[50%] max-w-[75%] rounded-tr-none"
-                  : "bg-gray-700 self-start lg:max-w-[50%] max-w-[75%] rounded-tl-none"
+                  ? "bg-amber-800 self-end ml-auto lg:max-w-[30%] max-w-[60%] sm:max-w-[40%] rounded-tr-none text-sm md:text-[15px]"
+                  : "bg-gray-800 self-start lg:max-w-[50%] max-w-[75%] rounded-tl-none break-words whitespace-pre-wrap"
               } transition-all duration-200`}
           >
-            {msg.content}
+          <ReactMarkdown remarkPlugins={[remarkGfm]} >
+              {msg.content}
+          </ReactMarkdown>
+           
           </div>
         ))}
         {typing && <div className="text-gray-500 italic mb-2">Typing...</div>}
@@ -86,20 +94,22 @@ const ChatScreen = () => {
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           placeholder="Type your message..."
-          className="flex-1 p-2 border-none rounded-lg outline-none "
+          className="flex-1 p-2 border-none rounded-lg outline-none  "
         />
         <button
           onClick={handleSend}
-          className="px-4 py-2 bg-amber-800 text-white rounded-lg hover:bg-amber-700 duration-200"
+         
+          className="px-2 sm:px-4 py-2 bg-amber-800 text-white rounded-lg hover:bg-amber-700 duration-200"
         >
-          Send
+         <ArrowUp/>
         </button>
         <button
           onClick={handleReset}
-          className="px-4 ml-5 py-2 bg-amber-800 text-white rounded-lg hover:bg-amber-700 duration-200"
+          className="px-2 sm:px-4 ml-1 sm:ml-5 py-2 bg-amber-800 text-white rounded-lg hover:bg-amber-700 duration-200"
         >
-          Reset
+         <Delete/>
         </button>
       </div>
     </div>
