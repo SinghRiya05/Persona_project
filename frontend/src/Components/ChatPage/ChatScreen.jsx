@@ -16,7 +16,7 @@ const ChatScreen = () => {
 
   
    
-  const API_URL =import.meta.env.VITE_API_URL || 'http://localhost:8080';
+  const API_URL =`https://persona-project-wg2r.onrender.com`
    
   console.log(API_URL);
   
