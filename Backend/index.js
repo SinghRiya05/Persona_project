@@ -8,12 +8,11 @@ config();
 const app = express();
 
 
-const FRONTEND =
-  process.env.FRONTEND_URL ||`http://localhost:5173/`;
+
   
 app.use(
   cors({
-    origin:FRONTEND,
+    origin:`https://persona-project-neon.vercel.app/`,
     credentials: true,
   })
 );
