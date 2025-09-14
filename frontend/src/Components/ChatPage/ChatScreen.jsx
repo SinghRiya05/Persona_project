@@ -14,7 +14,10 @@ const ChatScreen = () => {
   const [typing, setTyping] = useState(false);
   const chatBoxRef = useRef(null);
 
-  const API_URL =import.meta.VITE_API_URL || 'http://localhost:8080';
+  
+   
+  const API_URL =import.meta.env.VITE_API_URL || 'http://localhost:8080';
+  
 
   const handleReset = async () => {
     try {
