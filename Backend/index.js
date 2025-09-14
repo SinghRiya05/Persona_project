@@ -13,7 +13,7 @@ const FRONTEND =
   
 app.use(
   cors({
-    origin:`*`,
+    origin:FRONTEND,
     credentials: true,
   })
 );
