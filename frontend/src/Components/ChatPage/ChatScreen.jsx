@@ -17,8 +17,9 @@ const ChatScreen = () => {
   
    
   const API_URL =`https://persona-project-wg2r.onrender.com`
+  
    
-  console.log(API_URL);
+
   
 
   const handleReset = async () => {

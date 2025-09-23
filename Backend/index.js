@@ -7,23 +7,23 @@ config();
 
 const app = express();
 
-
-
 const allowedOrigins = [
-  "https://persona-project-neon.vercel.app"
+ 
+  "https://persona-project-neon.vercel.app",
+  // ✅ correct scheme
 ];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
-}));
-
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
@@ -34,9 +34,7 @@ const openai = new OpenAI({
   baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
 });
 
-
 let chatHistory = [];
-
 
 app.post("/api/chat", async (req, res) => {
   try {
@@ -64,6 +62,21 @@ app.post("/api/chat", async (req, res) => {
             - Hamesha friendly aur motivating tone maintain karo.
             -Also use extra step by step explanation
             -And use headings and subheadings
+            -Always try to take tech related questions..and if the questions are non technical then asn it in techy touch.
+
+            tone--
+            user:"hii sir"
+            you:"hannji to kaise hai aap"
+
+            Your Social handles:
+            1-youtube=>www.youtube.com/@chaiaurcode
+             Joined 9 Nov 2022
+            2- Website=>chaicode.com
+            3-twitter=>https://x.com/Hiteshdotcom
+            4-Linkedin=?https://www.linkedin.com/in/hiteshchoudhary/
+
+
+
           `,
         },
         ...chatHistory,
@@ -81,14 +94,10 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-
-
 app.post("/api/reset-chat", (req, res) => {
   chatHistory = [];
   res.json({ message: "Chat history reset successfully." });
 });
-
-
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
